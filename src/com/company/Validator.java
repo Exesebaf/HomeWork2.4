@@ -2,11 +2,11 @@ package com.company;
 
 public class Validator {
 
-//    private static final String VALID_SHARACTERS = "0123456789_absdefghiklmnopqrstuvwxyz_ABSDEFGHIKLMNOPQRSTUVWXYZ";
+    private static final String VALID_SHARACTERS = "0123456789_absdefghiklmnopqrstuvwxyz_ABSDEFGHIKLMNOPQRSTUVWXYZ";
 
-    private Validator(){
+
+    private Validator() {
     }
-
 
 
     public static boolean check(String login,
@@ -24,8 +24,8 @@ public class Validator {
     private static void validate(String login,
                                  String password,
                                  String confirmPassword) throws WrongLoginException, WrongPasswordException {
-        if (login == null || login.length() > 20) {
-            throw new WrongLoginException("Длина логина должна быть меньше или равна 20");
+        if (login.length() <= 3 || login.length() > 20) {
+            throw new WrongLoginException("Длина логина должна быть ,больше 3 при этом меньше или равна 20");
         }
         if (password == null || password.length() >= 20) {
             throw new WrongPasswordException("Длина пароля должна быть меньше 20");
@@ -34,30 +34,24 @@ public class Validator {
             throw new WrongPasswordException("Пароли должны совпадать");
         }
 
-        if (!login.matches("^\\w{1,20}$")) {
-            throw new WrongLoginException("В логине содержаться некорректные символ!");
-        }
-        if (!password.matches("^\\w{1,20}$")) {
-            throw new WrongPasswordException("В пароле содержаться некорректные символ!");
-        }
-//        validateCharacters(login, true);
-//        validateCharacters(password, false);
+
+        validateCharacters(login, true);
+        validateCharacters(password, false);
 
     }
 
-//    private static void validateCharacters(String s,
-//                                           boolean isLogin) throws WrongLoginException, WrongPasswordException {
-//        for (int i = 0; i < s.length(); i++) {
-//            if (!VALID_SHARACTERS.contains(String.valueOf(s.charAt(i)))) {
-//                if (isLogin) {
-//                    throw new WrongLoginException("В логине содержаться некорректные символ " + s.charAt(i) + "!");
-//                } else {
-//                    throw new WrongPasswordException("В пароле содержаться некорректные символ " + s.charAt(i) + "!");
-//                }
-//            }
-//        }
-//    }
-
+    private static void validateCharacters(String s,
+                                           boolean isLogin) throws WrongLoginException, WrongPasswordException {
+        for (int i = 0; i < s.length(); i++) {
+            if (!VALID_SHARACTERS.contains(String.valueOf(s.charAt(i)))) {
+                if (isLogin) {
+                    throw new WrongLoginException("В логине содержаться некорректные символ " + s.charAt(i) + "!");
+                } else {
+                    throw new WrongPasswordException("В пароле содержаться некорректные символ " + s.charAt(i) + "!");
+                }
+            }
+        }
+    }
 
 
 }
